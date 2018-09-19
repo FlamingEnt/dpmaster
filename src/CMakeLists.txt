@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 2.8)
 
 # set the USE_FOLDERS global property, this puts the targets into a CMakePredefinedTargets folder
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -71,11 +71,6 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
 
 	if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 		set(CMAKE_EXECUTABLE_SUFFIX ".${CMAKE_SYSTEM_PROCESSOR}${CMAKE_EXECUTABLE_SUFFIX}")
-		set(CMAKE_SHARED_LIBRARY_SUFFIX "_${CMAKE_SYSTEM_PROCESSOR}${CMAKE_SHARED_LIBRARY_SUFFIX}")
-	endif()
-
-	if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-		set(CMAKE_SHARED_LIBRARY_SUFFIX "_${CMAKE_SYSTEM_PROCESSOR}${CMAKE_SHARED_LIBRARY_SUFFIX}")
 	endif()
 elseif(MSVC)
 	# MSVC settings
