@@ -70,7 +70,7 @@ def buildSteps(buildType, cmakeArgs, buildId) {
         }
     } else {
         echo "Unix build on $NODE_NAME"
-        withEnv(["label_exp=" + STAGE_NAME.toLowerCase()) {
+        withEnv(["label_exp=" + STAGE_NAME.toLowerCase()]) {
             cmakeSteps(buildType, cmakeArgs, buildId)
         }
     }
