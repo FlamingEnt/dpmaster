@@ -117,6 +117,7 @@ pipeline {
 	stages {
 		// Checkout Git source
 		stage('Git Checkout') {
+			agent { label 'master' }
 			steps {
 				deleteDir()
 				dir('dpmaster-sources') {
@@ -125,6 +126,7 @@ pipeline {
 				stash includes: 'dpmaster-sources/**', name: 'dpmaster-sources'
 			}
 		}
+		
 		// Start builds
 		stage('Builds') {
             steps {
