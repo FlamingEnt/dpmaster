@@ -7,7 +7,7 @@
 buildMatrix = [
     // One release and debug build per supported OS.
     ['linux', [
-        builds: ['release'],
+        builds: ['debug', 'release'],
         tools: ['gcc'],
 		cmakeArgs: [''],
     ]],
@@ -40,8 +40,8 @@ def cmakeSteps(buildType, cmakeArgs, buildId) {
             cmakeArgs: (cmakeArgs + [
               "CMAKE_INSTALL_PREFIX=\"$installDir\"",
             ]).collect { x -> '-D' + x }.join(' '),
-            installation: 'cmake in search path',
-            sourceDir: '.',
+            installation: 'InSearchPath',
+            sourceDir: 'src',
             steps: [[
                 args: '--target install',
                 withCmake: true,
