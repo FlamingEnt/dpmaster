@@ -9,14 +9,17 @@ buildMatrix = [
     ['linux', [
         builds: ['release'],
         tools: ['gcc'],
+		cmakeArgs: [''],
     ]],
     ['macos', [
         builds: ['debug', 'release'],
         tools: ['clang'],
+		cmakeArgs: [''],
     ]],
 //    ['windows', [
 //        builds: ['debug', 'release'],
 //        tools: ['msvc'],
+//		  cmakeArgs: [''],
 //    ]],
 ]
 
