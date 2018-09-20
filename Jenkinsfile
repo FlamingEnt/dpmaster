@@ -23,6 +23,12 @@ buildMatrix = [
 //    ]],
 ]
 
+// Optional environment variables for combinations of labels.
+buildEnvironments = [
+    'macos && gcc': ['CXX=g++'],
+    'linux && clang': ['CXX=clang++'],
+]
+
 // cmake build function
 def cmakeSteps(buildType, cmakeArgs, buildId) {
     def installDir = "$WORKSPACE/$buildId"
