@@ -34,18 +34,35 @@ def cmakeSteps(buildType, cmakeArgs, buildId) {
     def installDir = "$WORKSPACE/$buildId"
     dir('dpmaster-sources') {
         // Configure and build.
-        cmakeBuild([
-            buildDir: 'build',
-            buildType: buildType,
-            cmakeArgs: (cmakeArgs + [
-              "CMAKE_INSTALL_PREFIX=\"$installDir\"",
-            ]).collect { x -> '-D' + x }.join(' '),
-            installation: 'InSearchPath',
-            sourceDir: 'src',
-            steps: [[
-                withCmake: true,
-            ]],
-        ])
+		if (STAGE_NAME.contains('macos')) {
+			// macOS CMake installs into /usr/local/bin which isn't picked up by Jenkins
+			cmakeBuild([
+				buildDir: 'build',
+				buildType: buildType,
+				cmakeArgs: (cmakeArgs + [
+				  "CMAKE_INSTALL_PREFIX=\"$installDir\"",
+				]).collect { x -> '-D' + x }.join(' '),
+				installation: 'MacPath',
+				sourceDir: 'src',
+				steps: [[
+					withCmake: true,
+				]],
+			])
+		} else {
+			// regular CMake
+			cmakeBuild([
+				buildDir: 'build',
+				buildType: buildType,
+				cmakeArgs: (cmakeArgs + [
+				  "CMAKE_INSTALL_PREFIX=\"$installDir\"",
+				]).collect { x -> '-D' + x }.join(' '),
+				installation: 'InSearchPath',
+				sourceDir: 'src',
+				steps: [[
+					withCmake: true,
+				]],
+			])
+		}
         // Run unit tests.
         //ctest([
         //    arguments: '--output-on-failure',
@@ -71,7 +88,7 @@ def buildSteps(buildType, cmakeArgs, buildId) {
         // Create directory.
     }
     unstash('dpmaster-sources')
-    if (STAGE_NAME.contains('Windows')) {
+    if (STAGE_NAME.contains('windows')) {
         echo "Windows build on $NODE_NAME"
         withEnv(['PATH=C:\\Windows\\System32;C:\\Program Files\\CMake\\bin;C:\\Program Files\\Git\\cmd;C:\\Program Files\\Git\\bin']) {
             cmakeSteps(buildType, cmakeArgs, buildId)
@@ -115,12 +132,6 @@ pipeline {
         PrettyJobBaseName = env.JOB_BASE_NAME.replace('%2F', '/')
         PrettyJobName = "build #${env.BUILD_NUMBER} for $PrettyJobBaseName"
     }
-
-	// Trigger the build
-	triggers {
-		// Poll GitHub every two hours, in case webhooks aren't used
-		pollSCM('H */2 * * *')
-	}
 
 	stages {
 		// Checkout Git source
