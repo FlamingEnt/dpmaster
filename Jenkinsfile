@@ -130,7 +130,7 @@ pipeline {
     agent none
     environment {
         PrettyJobBaseName = env.JOB_BASE_NAME.replace('%2F', '/')
-        PrettyJobName = "build #${env.BUILD_NUMBER} for $PrettyJobBaseName"
+        PrettyJobName = "dpmaster build #${env.BUILD_NUMBER} for $PrettyJobBaseName"
     }
 
 	stages {
