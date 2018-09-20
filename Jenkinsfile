@@ -1,7 +1,6 @@
 #!groovy
 
 // Jenkinsfile for compiling, testing, and packaging
-// Requires CMake plugin from https://github.com/davidjsherman/aseba-jenkins.git in global library.
 
 pipeline {
 	agent any // use any available Jenkins agent
@@ -27,7 +26,7 @@ pipeline {
 						label 'linux'
 					}
 					steps {
-						CMake([label: 'linux', sourceDir: 'src', buildType: 'Release'])
+						cmakeBuild([label: 'linux', sourceDir: 'src', buildType: 'Release', steps: [[withCmake: true]]])
 						stash includes: 'dist/**', name: 'dist-linux'
 						stash includes: 'build/**', name: 'build-linux'
 					}
@@ -37,7 +36,7 @@ pipeline {
 						label 'macos'
 					}
 					steps {
-						CMake([label: 'macos', sourceDir: 'src', buildType: 'Release'])
+						cmakeBuild([label: 'macos', sourceDir: 'src', buildType: 'Release', steps: [[withCmake: true]]])
 						stash includes: 'dist/**', name: 'dist-macos'
 					}
 				}
@@ -46,7 +45,7 @@ pipeline {
 				//		label 'windows'
 				//	}
 				//	steps {
-				//		CMake([label: 'windows', sourceDir: 'src', buildType: 'Release'])
+				//		cmakeBuild([label: 'windows', sourceDir: 'src', buildType: 'Release'], steps: [[withCmake: true]]])
 				//		stash includes: 'dist/**', name: 'dist-windows'
 				//	}
 				//}
