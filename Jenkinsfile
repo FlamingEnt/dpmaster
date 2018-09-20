@@ -43,7 +43,6 @@ def cmakeSteps(buildType, cmakeArgs, buildId) {
             installation: 'InSearchPath',
             sourceDir: 'src',
             steps: [[
-                args: '--target install',
                 withCmake: true,
             ]],
         ])
