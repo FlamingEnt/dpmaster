@@ -27,7 +27,7 @@ pipeline {
 						label 'linux'
 					}
 					steps {
-						CMake([label: 'linux'])
+						CMake([label: 'linux', sourceDir: 'src', buildType: 'Release'])
 						stash includes: 'dist/**', name: 'dist-linux'
 						stash includes: 'build/**', name: 'build-linux'
 					}
@@ -37,19 +37,19 @@ pipeline {
 						label 'macos'
 					}
 					steps {
-						CMake([label: 'macos'])
+						CMake([label: 'macos', sourceDir: 'src', buildType: 'Release'])
 						stash includes: 'dist/**', name: 'dist-macos'
 					}
 				}
-				stage("Compile on windows") {
-					agent {
-						label 'windows'
-					}
-					steps {
-						CMake([label: 'windows'])
-						stash includes: 'dist/**', name: 'dist-windows'
-					}
-				}
+				//stage("Compile on windows") {
+				//	agent {
+				//		label 'windows'
+				//	}
+				//	steps {
+				//		CMake([label: 'windows', sourceDir: 'src', buildType: 'Release'])
+				//		stash includes: 'dist/**', name: 'dist-windows'
+				//	}
+				//}
 			}
 		}
 		//stage('Test') {
@@ -71,7 +71,7 @@ pipeline {
 			steps {
 				unstash 'dist-linux'
 				unstash 'dist-macos'
-				unstash 'dist-windows'
+				//unstash 'dist-windows'
 				archiveArtifacts artifacts: 'dist/**', fingerprint: true, onlyIfSuccessful: true
 			}
 		}
