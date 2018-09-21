@@ -9,18 +9,18 @@ buildMatrix = [
     ['linux', [
         builds: ['debug', 'release'],
         tools: ['gcc'],
-		cmakeArgs: [''],
+	cmakeArgs: [''],
     ]],
     ['macos', [
         builds: ['debug', 'release'],
         tools: ['clang'],
-		cmakeArgs: [''],
+	cmakeArgs: [''],
     ]],
-//    ['windows', [
-//        builds: ['debug', 'release'],
-//        tools: ['msvc'],
-//		  cmakeArgs: [''],
-//    ]],
+    ['windows', [
+        builds: ['debug', 'release'],
+        tools: ['msvc'],
+        cmakeArgs: [''],
+    ]],
 ]
 
 // Optional environment variables for combinations of labels.
