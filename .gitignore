@@ -30,3 +30,10 @@
 *.exe
 *.out
 *.app
+
+build/xcode
+build/vs2017
+build/vs2015
+build/vs2013
+build/vs2010
+build/unix
